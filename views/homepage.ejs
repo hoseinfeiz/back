@@ -18,6 +18,7 @@
       </div>
 
       <div class="row mb-2">
+        <% console.log('postIDDDD',posts[0]._id) %>
     
         <% posts.forEach(post => { %>
           <div class="col-md-6">
@@ -25,7 +26,7 @@
             <div class="card-body d-flex flex-column align-items-start">
               <strong class="d-inline-block mb-2 text-success"><%= post.category %></strong>
               <h3 class="mb-0">
-                <a class="text-dark" href="#"><%= post.title.substr(0,20) %></a>
+                <a class="text-dark" href="/post/<%= post.id  %>"><%= post.title.substr(0,20) %></a>
               </h3>
               <div class="mb-1 text-muted"><%= post.created_at%></div>
               <p class="card-text mb-auto"><%= post.description.substr(0,100) %></p>
@@ -108,7 +109,7 @@
 
           <nav class="blog-pagination">
             <% for (let i=1;i<=number_page;i++){ %>
-            <a class="btn btn-outline-primary" href="/page/<%= i  %>"><%= i  %></a>
+            <a class="btn btn-outline-primary" href="/page/<%= i  %><% if(catsFilter){ %>?cats=<%= catsFilter %> <% } %>"><%= i  %></a>
            <% } %>
           </nav>
 
