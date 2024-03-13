@@ -3,9 +3,9 @@ const router = require('./routes')
 const morgan = require('morgan')
 const path = require('path')
 const mongodb = require('./configs/mongodb')
-const passport = require('passport')
-const LocalStrategy = require('passport-local')
-const User = require('./models/User')
+
+const session = require('express-session')
+const flash = require('express-flash')
 
 const app = express()
 
@@ -16,35 +16,14 @@ app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(morgan('dev'))
-
-passport.use(
-    new LocalStrategy(
-        {
-            usernameField: 'email',
-            passwordField: 'password',
-            session: false,
-        },
-        async (username, password, done) => {
-            try {
-                const user = await User.findOne({ email: username })
-                if (!user) {
-                    return done(null, false, {
-                        message: 'Incorrect username or password.',
-                    })
-                }
-                if (user.password !== password) {
-                    return done(null, false, {
-                        message: 'Incorrect password.',
-                    })
-                }
-                return done(null, user)
-            } catch (error) {
-                done(error)
-            }
-        }
-    )
+app.use(
+    session({
+        secret: 'keyboard cat',
+    })
 )
+app.use(flash())
 
+require('./configs/auth')
 app.use(express.json())
 app.use(express.urlencoded())
 

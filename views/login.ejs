@@ -12,6 +12,11 @@
                 height="72"
             />
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <% if(Object.keys(flash).length !== 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= flash.error  %>
+            </div>
+            <% } %>
             <label for="inputEmail" class="sr-only">Email address</label>
             <input
                 name="email"
