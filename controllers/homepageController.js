@@ -1,7 +1,13 @@
 const Category = require('../models/Category')
 const Post = require('../models/Post')
 const moment = require('moment')
+const User = require('../models/User')
 const homepageController = async (req, res) => {
+    let user = null
+    if (req.user) {
+        user = await User.findById(req.user.id)
+        console.log('userrrrrrrr', user)
+    }
     const catsFilter = req.query.cats
     const pageNum = req.params.id ? req.params.id : 1
     const offset = (pageNum - 1) * 10
@@ -28,6 +34,7 @@ const homepageController = async (req, res) => {
         posts: comments,
         postsCount,
         catsFilter,
+        user,
     })
 }
 

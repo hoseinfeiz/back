@@ -32,3 +32,15 @@ passport.use(
         }
     )
 )
+
+passport.serializeUser((user, cb) => {
+    process.nextTick(() => {
+        cb(null, { id: user.id, username: user.username })
+    })
+})
+
+passport.deserializeUser((user, cb) => {
+    process.nextTick(() => {
+        return cb(null, user)
+    })
+})
