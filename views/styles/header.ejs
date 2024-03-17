@@ -2,7 +2,7 @@
     <div class="row flex-nowrap justify-content-between align-items-center">
 
         <% if(user){ %>
-            <h4>welcome <%= user.name  %></h4>
+            <p>welcome <%= user.name  %>|<a href="/dashboard">Dashboard</a></p>
             <% }else{ %>
         <div class="col-4 pt-1">
             <button

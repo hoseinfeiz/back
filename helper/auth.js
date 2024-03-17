@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('../models/User')
+const hash = require('./hash')
 
 passport.use(
     new LocalStrategy(
@@ -17,7 +18,8 @@ passport.use(
                         message: 'Incorrect username or password.',
                     })
                 }
-                if (user.password !== password) {
+
+                if (!(await hash.checkPassword(password, user.password))) {
                     return done(null, false, {
                         message: 'Incorrect password.',
                     })

@@ -1,4 +1,5 @@
 const passport = require('passport')
+
 const get = (req, res) => {
     const flash = req.flash()
     res.render('login', {
