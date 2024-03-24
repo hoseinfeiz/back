@@ -8,7 +8,7 @@ const loginController = require('../controllers/loginController')
 const signupController = require('../controllers/signupController')
 const dashboardController = require('../controllers/dashboardController')
 const logoutController = require('../controllers/logoutController')
-const { isLoggedIn } = require('../helper/loginCheck')
+const { isLoggedIn, isLoggedOut } = require('../helper/loginCheck')
 
 const router = express.Router()
 
@@ -17,7 +17,7 @@ router.get('/post/:id', postpageController)
 router.get('/page/:id', homepageController)
 router.get('/about', aboutController)
 router.post('/search', searchController)
-router.get('/login', loginController.get)
+router.get('/login', isLoggedOut, loginController.get)
 router.post('/login', loginController.post)
 router.get('/signup', signupController.get)
 router.post(
@@ -27,6 +27,7 @@ router.post(
     signupController.post
 )
 router.get('/dashboard', isLoggedIn, dashboardController)
+
 router.get('/logout', logoutController)
 
 module.exports = router
