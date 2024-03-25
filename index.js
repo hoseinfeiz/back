@@ -8,10 +8,10 @@ const flash = require('express-flash')
 const passport = require('passport')
 require('./helper/auth')
 const errorHandler = require('./helper/errorHandler')
-
+require('dotenv').config({ path: './variables.env' })
 const app = express()
 
-const PORT = 3000
+const PORT = process.env.PORT
 
 app.set('view engine', 'ejs')
 
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(morgan('dev'))
 app.use(
     session({
-        secret: 'keyboard cat',
+        secret: process.env.SESSION_SECRET_KEY,
     })
 )
 app.use(passport.authenticate('session'))
